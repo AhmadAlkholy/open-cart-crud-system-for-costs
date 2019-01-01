@@ -1,0 +1,95 @@
+{{ header }}{{ column_left }}
+<style type="text/css">
+
+label{
+  font-size:20px;
+  margin-top:20px;
+  margin-bottom:10px;
+  display:block;
+  font-weight:500;
+}
+input, select, text-area{
+  width:90%;
+  max-width:90%;
+  height:40px!important;
+  line-height:40px !important;
+  border-radius:10px;
+  border:solid silver 2px;
+}
+textarea{
+  height:150px;
+  width:90%;
+}
+.school-system-form{
+  padding-left:5%;
+}
+.crud-btn{
+  display:block;
+  margin:20px auto !important;
+  border-radius:5px;
+  width:300px;
+  height:50px;
+  background:#21c083;
+  border:none;
+  color:#fff;
+  font-weight:600;
+  font-size:20px;
+  cursor:pointer;
+}
+.crud-btn a{
+  color:#fff;
+}
+.crud-btn:disabled{
+  color:#ccc;
+}
+.edit-btn, .delete-btn{
+  width:100px;
+  height:30px;
+  font-size:16px;
+}
+.delete-btn{
+  background:#f21700;
+}
+a{
+  text-decoration:none;
+}
+</style>
+
+
+<div class="container" style="margin-left:20%">
+
+  {% if error_warning %}
+      {{ error_warning }}
+  {% endif %}
+
+  {% for breadcrumb in breadcrumbs %}
+      <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+  {% endfor %}
+
+	<form method="post" action="{{action}}"  enctype="multipart/form-data" id="form">
+    {% if error_warning %}
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i>{{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+		<label>Description</label>
+		<textarea name="cost_desc">{{costs.description}}</textarea>
+
+		<label>Value</label>
+		<input required name="cost_value" type="number" value="{{costs.value}}">
+
+		<button class="crud-btn" {% if edit %} disabled {% endif %} >{{ submit }}</button>
+	</form>
+</div>
+
+{% if edit %} 
+<script>
+
+$('#form textarea, #form input').on('change keyup',function(){
+    $('.crud-btn').prop('disabled', false);
+});
+
+</script>
+{% endif %}
+
+{{ footer }}
